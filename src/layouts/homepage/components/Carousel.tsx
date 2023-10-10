@@ -4,6 +4,7 @@ import { lay3SachMoiNhat } from "../../../api/SachAPI";
 import SachModel from "../../../models/SachModel";
 import CarouselItem from "./CarouselItem";
 
+
 const Carousel: React.FC = () => {
     const [danhSachQuyenSach, setDanhSachQuyenSach] = useState<SachModel[]>([]);
     const [dangTaiDuLieu, setDangTaiDuLieu] = useState(true);
@@ -11,8 +12,8 @@ const Carousel: React.FC = () => {
 
     useEffect(() => {
         lay3SachMoiNhat().then(
-            sachData => {
-                setDanhSachQuyenSach(sachData);
+            kq => {
+                setDanhSachQuyenSach(kq.ketQua);
                 setDangTaiDuLieu(false);
             }
         ).catch(
