@@ -2,8 +2,6 @@ import React from "react";
 import SachModel from "../models/SachModel";
 import { my_request } from "./Request";
 
-
-
 interface KetQuaInterface {
     ketQua: SachModel[];
     tongSoTrang: number;
@@ -53,6 +51,24 @@ export async function lay3SachMoiNhat(): Promise<KetQuaInterface> {
 
     // Xác định endpoint
     const duongDan: string = 'http://localhost:8080/sach?sort=maSach,desc&page=0&size=3';
+
+    return laySach(duongDan);
+
+}
+
+
+export async function timKiemSach(tuKhoaTimKiem: string, maTheLoai: number): Promise<KetQuaInterface> {
+
+    // Xác định endpoint
+    let duongDan: string = `http://localhost:8080/sach?sort=maSach,desc&size=8&page=0`;
+
+    if (tuKhoaTimKiem !== '' && maTheLoai == 0) {
+        duongDan = `http://localhost:8080/sach/search/findByTenSachContaining?sort=maSach,desc&size=8&page=0&tenSach=${tuKhoaTimKiem}`
+    } else if (tuKhoaTimKiem === '' && maTheLoai > 0) {
+        duongDan = `http://localhost:8080/sach/search/findByDanhSachTheLoai_MaTheLoai?sort=maSach,desc&size=8&page=0&maTheLoai=${maTheLoai}`
+    } else if (tuKhoaTimKiem !== '' && maTheLoai > 0) {
+        duongDan = `http://localhost:8080/sach/search/findByTenSachContainingAndDanhSachTheLoai_MaTheLoai?sort=maSach,desc&size=8&page=0&maTheLoai=${maTheLoai}&tenSach=${tuKhoaTimKiem}`
+    }
 
     return laySach(duongDan);
 
